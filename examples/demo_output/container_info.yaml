@@ -1,0 +1,19 @@
+container_id: abc123def456
+container_name: demo-nginx-server
+image: nginx:latest
+image_id: sha256:abcdef123456
+mounts:
+- Destination: /var/log/nginx
+  Mode: rw
+  Source: /host/logs
+  Type: bind
+- Destination: /etc/nginx/conf.d
+  Mode: ro
+  Name: nginx-config
+  Type: volume
+ports:
+  80/tcp:
+  - HostIp: 0.0.0.0
+    HostPort: '8080'
+  - HostIp: '::'
+    HostPort: '8080'

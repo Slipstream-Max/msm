@@ -1,0 +1,18 @@
+[project]
+name = "msm"
+version = "0.1.0"
+description = "MCP Server Manager"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.116.1",
+    "python-dotenv>=1.1.1",
+    "prompt-toolkit>=3.0.52",
+    "httpx>=0.28.1",
+    "paramiko>=4.0.0",
+    "rich>=14.1.0",
+    "docker>=7.1.0",
+    "pyyaml[all]>=6.0.2",
+    "types-pyyaml>=6.0.12.20250822",
+    "pytest>=7.0.0",
+]

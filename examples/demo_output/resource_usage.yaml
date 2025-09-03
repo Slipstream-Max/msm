@@ -1,0 +1,7 @@
+block_read: 10485760
+block_write: 5242880
+cpu_usage: 15.7
+memory_usage: 134217728
+network_rx: 5242880
+network_tx: 2097152
+pids: 8

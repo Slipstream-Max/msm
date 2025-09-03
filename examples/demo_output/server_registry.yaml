@@ -1,0 +1,75 @@
+last_updated: '2025-09-03T17:58:44.269201'
+servers:
+  api-server:
+    config:
+      auto_start: false
+      created_at: '2025-09-03T17:58:44.269174'
+      description: "API \u670D\u52A1\u5668"
+      docker_command: docker run -d -p 3000:3000 myapi
+      environment: {}
+      health_check: null
+      host: localhost
+      labels: {}
+      name: api-server
+      networks: []
+      port: null
+      restart_policy: 'no'
+      updated_at: '2025-09-03T17:58:44.269175'
+      volumes: []
+    status:
+      container_info: null
+      container_logs: null
+      health_status: null
+      last_check: '2025-09-03T17:58:44.269194'
+      resource_usage: null
+      status: unknown
+      uptime: null
+  db-server:
+    config:
+      auto_start: false
+      created_at: '2025-09-03T17:58:44.269178'
+      description: "\u6570\u636E\u5E93\u670D\u52A1\u5668"
+      docker_command: docker run -d -p 5432:5432 postgres
+      environment: {}
+      health_check: null
+      host: localhost
+      labels: {}
+      name: db-server
+      networks: []
+      port: null
+      restart_policy: 'no'
+      updated_at: '2025-09-03T17:58:44.269178'
+      volumes: []
+    status:
+      container_info: null
+      container_logs: null
+      health_status: null
+      last_check: '2025-09-03T17:58:44.269199'
+      resource_usage: null
+      status: unknown
+      uptime: null
+  web-server:
+    config:
+      auto_start: false
+      created_at: '2025-09-03T17:58:44.269170'
+      description: "Web \u670D\u52A1\u5668"
+      docker_command: docker run -d -p 8080:80 nginx
+      environment: {}
+      health_check: null
+      host: localhost
+      labels: {}
+      name: web-server
+      networks: []
+      port: null
+      restart_policy: 'no'
+      updated_at: '2025-09-03T17:58:44.269171'
+      volumes: []
+    status:
+      container_info: null
+      container_logs: null
+      health_status: null
+      last_check: '2025-09-03T17:58:44.269182'
+      resource_usage: null
+      status: unknown
+      uptime: null
+version: 1.0.0
