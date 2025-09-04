@@ -11,7 +11,7 @@ from src.msm.data.models import (
     MCPServerStatus,
     MCPServerData,
     ServerRegistry,
-    ServerStatus
+    ServerStatus,
 )
 
 
@@ -26,7 +26,13 @@ class TestYAMLMethods:
             host="localhost",
             port=8080,
             description="Test server",
-            auto_start=True
+            auto_start=True,
+            health_check={
+                "test": ["CMD", "curl", "-f", "http://localhost/health"],
+                "interval": 30000000000,  # 30秒
+                "timeout": 10000000000,  # 10秒
+                "retries": 3,
+            },
         )
 
         yaml_str = config.to_yaml()
@@ -48,7 +54,13 @@ class TestYAMLMethods:
             image="nginx:latest",
             image_id="sha256:123",
             ports={"80/tcp": [{"HostIp": "0.0.0.0", "HostPort": "8080"}]},
-            mounts=[{"Type": "bind", "Source": "/host/path", "Destination": "/container/path"}]
+            mounts=[
+                {
+                    "Type": "bind",
+                    "Source": "/host/path",
+                    "Destination": "/container/path",
+                }
+            ],
         )
 
         yaml_str = container_info.to_yaml()
@@ -64,7 +76,7 @@ class TestYAMLMethods:
         logs = ContainerLogs(
             logs=[
                 "2025-09-03 10:00:00 INFO Starting nginx",
-                "2025-09-03 10:00:01 INFO Listening on port 80"
+                "2025-09-03 10:00:01 INFO Listening on port 80",
             ]
         )
 
@@ -84,7 +96,7 @@ class TestYAMLMethods:
             network_tx=512000,
             block_read=2048000,
             block_write=1024000,
-            pids=5
+            pids=5,
         )
 
         yaml_str = usage.to_yaml()
@@ -103,7 +115,7 @@ class TestYAMLMethods:
             container_logs=ContainerLogs(logs=["log1", "log2"]),
             resource_usage=ResourceUsage(cpu_usage=10.0),
             uptime="1h 30m",
-            health_status="healthy"
+            health_status="healthy",
         )
 
         yaml_str = status.to_yaml()
@@ -116,10 +128,7 @@ class TestYAMLMethods:
 
     def test_mcpserverdata_yaml(self):
         """测试 MCPServerData 的 YAML 方法"""
-        config = MCPServerConfig(
-            name="demo-server",
-            docker_command="docker run demo"
-        )
+        config = MCPServerConfig(name="demo-server", docker_command="docker run demo")
         status = MCPServerStatus(status=ServerStatus.STOPPED)
 
         data = MCPServerData(config=config, status=status)
@@ -136,14 +145,8 @@ class TestYAMLMethods:
         """测试 ServerRegistry 的 YAML 方法"""
         registry = ServerRegistry(version="2.0.0")
 
-        config1 = MCPServerConfig(
-            name="server1",
-            docker_command="docker run server1"
-        )
-        config2 = MCPServerConfig(
-            name="server2",
-            docker_command="docker run server2"
-        )
+        config1 = MCPServerConfig(name="server1", docker_command="docker run server1")
+        config2 = MCPServerConfig(name="server2", docker_command="docker run server2")
 
         registry.add_server(config1)
         registry.add_server(config2)
@@ -197,14 +200,10 @@ class TestModelValidation:
         """测试无效配置"""
         with pytest.raises(ValueError):
             MCPServerConfig(
-                name="invalid name with spaces",
-                docker_command="docker run nginx"
+                name="invalid name with spaces", docker_command="docker run nginx"
             )
 
     def test_invalid_docker_command(self):
         """测试无效 Docker 命令"""
         with pytest.raises(ValueError):
-            MCPServerConfig(
-                name="test",
-                docker_command="invalid command"
-            )
+            MCPServerConfig(name="test", docker_command="invalid command")
