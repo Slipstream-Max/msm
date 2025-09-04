@@ -1,0 +1,64 @@
+last_updated: '2025-09-04T10:47:17.213247'
+servers:
+  nginx-server:
+    config:
+      auto_start: true
+      created_at: '2025-09-04T10:47:17.213212'
+      description: 生产环境 Nginx 服务器
+      docker_command: docker run -d -p 8080:80 --name nginx-prod nginx:stable
+      environment: {}
+      health_check: null
+      host: localhost
+      labels: {}
+      name: nginx-server
+      networks: []
+      port: 8080
+      restart_policy: 'no'
+      updated_at: '2025-09-04T10:47:17.213212'
+      volumes: []
+    status:
+      container_info:
+        container_id: abc123def456
+        container_name: nginx-prod
+        image: nginx:stable
+        image_id: null
+        mounts: []
+        ports: {}
+      container_logs: null
+      health_status: healthy
+      last_check: '2025-09-04T10:47:17.213230'
+      resource_usage:
+        block_read: null
+        block_write: null
+        cpu_usage: 15.5
+        memory_usage: 52428800
+        network_rx: null
+        network_tx: null
+        pids: null
+      status: running
+      uptime: 2h 30m
+  redis-server:
+    config:
+      auto_start: false
+      created_at: '2025-09-04T10:47:17.213154'
+      description: Redis 缓存服务器
+      docker_command: docker run -d -p 6379:6379 redis:alpine
+      environment: {}
+      health_check: null
+      host: localhost
+      labels: {}
+      name: redis-server
+      networks: []
+      port: 6379
+      restart_policy: 'no'
+      updated_at: '2025-09-04T10:47:17.213155'
+      volumes: []
+    status:
+      container_info: null
+      container_logs: null
+      health_status: null
+      last_check: '2025-09-04T10:47:17.213182'
+      resource_usage: null
+      status: unknown
+      uptime: null
+version: 2.0.0

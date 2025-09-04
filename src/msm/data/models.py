@@ -47,7 +47,7 @@ class MCPServerConfig(BaseModel):
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False)
+        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
 
     @classmethod
     def from_yaml(cls, yaml_str: str) -> 'MCPServerConfig':
@@ -84,7 +84,7 @@ class ContainerInfo(BaseModel):
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False)
+        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
 
     @classmethod
     def from_yaml(cls, yaml_str: str) -> 'ContainerInfo':
@@ -99,7 +99,7 @@ class ContainerLogs(BaseModel):
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False)
+        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
 
     @classmethod
     def from_yaml(cls, yaml_str: str) -> 'ContainerLogs':
@@ -125,7 +125,7 @@ class ResourceUsage(BaseModel):
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False)
+        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
 
     @classmethod
     def from_yaml(cls, yaml_str: str) -> 'ResourceUsage':
@@ -170,7 +170,7 @@ class MCPServerStatus(BaseModel):
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False)
+        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
 
     @classmethod
     def from_yaml(cls, yaml_str: str) -> 'MCPServerStatus':
@@ -200,7 +200,7 @@ class MCPServerData(BaseModel):
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False)
+        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
 
     @classmethod
     def from_yaml(cls, yaml_str: str) -> 'MCPServerData':
@@ -283,7 +283,7 @@ class ServerRegistry(BaseModel):
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False)
+        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
 
     @classmethod
     def from_yaml(cls, yaml_str: str) -> 'ServerRegistry':
