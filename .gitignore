@@ -16,3 +16,4 @@ wheels/
 
 # UV
 uv.lock
+.python-version
