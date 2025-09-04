@@ -6,4 +6,5 @@
 ### 安装方式
 
 uv sync
+
 uv pip install -e .
