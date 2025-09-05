@@ -12,7 +12,7 @@ MSM is a command-line tool for managing multiple Docker-containerized MCP (Model
 
 ### Key Components Status
 - ✅ **Data Models**: Complete Pydantic models with YAML serialization in `src/msm/data/models.py`
-- 🚧 **Core Layer**: `ContainerManager` implementation in progress
+- 🚧 **Core Layer**: `StatusMonitor` implementation in progress
 - 🚧 **CLI Commands**: Extensible command framework exists, needs MCP-specific commands
 
 ## Development Patterns
@@ -40,21 +40,6 @@ class MyCommand(BaseCommand):
 - Backend operations return `Optional[Dict[str, Any]]` with status/error patterns
 - Follow established patterns in `BackendOperations` class for consistent error handling
 
-## Critical Implementation Guidelines
-
-### Container Management (Priority: HIGH)
-The `ContainerManager` class in `src/msm/core/container_manager.py` is the foundation. Implement these methods:
-```python
-# Lifecycle operations
-def start_container(self, config: MCPServerConfig) -> bool
-def stop_container(self, container_id: str) -> bool  
-def restart_container(self, container_id: str) -> bool
-
-# Information retrieval
-def get_container_info(self, container_id: str) -> Optional[ContainerInfo]
-def get_container_logs(self, container_id: str) -> ContainerLogs
-def get_container_status(self, container_id: str) -> ContainerStatus
-```
 
 ### Target CLI Commands
 Implement these MCP-specific commands (reference `docs/demand.md`):
@@ -95,11 +80,6 @@ uv pip install -e .
 - **paramiko**: SSH for remote server connections
 - **pyyaml**: Configuration file management
 
-## Current Priorities
-1. Complete `ContainerManager` implementation with Docker API integration
-2. Add MCP lifecycle management commands to CLI
-3. Implement `StatusMonitor` for container health checking
-4. Create `RemoteManager` for distributed server support
 
 ## Anti-Patterns to Avoid
 - Don't bypass the Pydantic model validation - use proper field validation
