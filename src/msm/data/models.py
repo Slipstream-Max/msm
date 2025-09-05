@@ -6,7 +6,8 @@ MCP Server管理系统的数据模型定义
 
 from datetime import datetime
 from enum import Enum
-from typing import Dict, List, Optional, Any
+from typing import Any, Dict, List, Optional
+
 import yaml
 from pydantic import BaseModel, Field, field_validator
 
@@ -32,14 +33,14 @@ class MCPServerConfig(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.now, description="更新时间")
 
     @field_validator("name")
-    def validate_name(cls, v):
+    def validate_name(cls, v: str) -> str:
         """验证名称格式"""
         if not v.replace("-", "").replace("_", "").isalnum():
             raise ValueError("名称只能包含字母、数字、连字符和下划线")
         return v
 
     @field_validator("docker_command")
-    def validate_docker_command(cls, v):
+    def validate_docker_command(cls, v: str) -> str:
         """验证Docker命令格式"""
         if not v.strip().startswith("docker"):
             raise ValueError("必须是有效的Docker命令")
@@ -47,10 +48,12 @@ class MCPServerConfig(BaseModel):
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
+        return yaml.dump(
+            self.model_dump(mode="json"), default_flow_style=False, allow_unicode=True
+        )
 
     @classmethod
-    def from_yaml(cls, yaml_str: str) -> 'MCPServerConfig':
+    def from_yaml(cls, yaml_str: str) -> "MCPServerConfig":
         """从 YAML 字符串反序列化"""
         data = yaml.safe_load(yaml_str)
         return cls(**data)
@@ -66,7 +69,7 @@ class ServerStatus(str, Enum):
     STARTING = "starting"
     STOPPING = "stopping"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.value
 
 
@@ -84,13 +87,16 @@ class ContainerInfo(BaseModel):
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
+        return yaml.dump(
+            self.model_dump(mode="json"), default_flow_style=False, allow_unicode=True
+        )
 
     @classmethod
-    def from_yaml(cls, yaml_str: str) -> 'ContainerInfo':
+    def from_yaml(cls, yaml_str: str) -> "ContainerInfo":
         """从 YAML 字符串反序列化"""
         data = yaml.safe_load(yaml_str)
         return cls(**data)
+
 
 class ContainerLogs(BaseModel):
     """容器日志模型"""
@@ -99,10 +105,12 @@ class ContainerLogs(BaseModel):
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
+        return yaml.dump(
+            self.model_dump(mode="json"), default_flow_style=False, allow_unicode=True
+        )
 
     @classmethod
-    def from_yaml(cls, yaml_str: str) -> 'ContainerLogs':
+    def from_yaml(cls, yaml_str: str) -> "ContainerLogs":
         """从 YAML 字符串反序列化"""
         data = yaml.safe_load(yaml_str)
         return cls(**data)
@@ -125,10 +133,12 @@ class ResourceUsage(BaseModel):
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
+        return yaml.dump(
+            self.model_dump(mode="json"), default_flow_style=False, allow_unicode=True
+        )
 
     @classmethod
-    def from_yaml(cls, yaml_str: str) -> 'ResourceUsage':
+    def from_yaml(cls, yaml_str: str) -> "ResourceUsage":
         """从 YAML 字符串反序列化"""
         data = yaml.safe_load(yaml_str)
         return cls(**data)
@@ -164,16 +174,18 @@ class MCPServerStatus(BaseModel):
             "healthy",
         ]
 
-    def update_check_time(self):
+    def update_check_time(self) -> None:
         """更新检查时间"""
         self.last_check = datetime.now()
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
+        return yaml.dump(
+            self.model_dump(mode="json"), default_flow_style=False, allow_unicode=True
+        )
 
     @classmethod
-    def from_yaml(cls, yaml_str: str) -> 'MCPServerStatus':
+    def from_yaml(cls, yaml_str: str) -> "MCPServerStatus":
         """从 YAML 字符串反序列化"""
         data = yaml.safe_load(yaml_str)
         return cls(**data)
@@ -190,20 +202,22 @@ class MCPServerData(BaseModel):
         """获取实例名称"""
         return self.config.name
 
-    def update_status(self, new_status: MCPServerStatus):
+    def update_status(self, new_status: MCPServerStatus) -> None:
         """更新状态信息"""
         self.status = new_status
 
-    def update_config(self, new_config: MCPServerConfig):
+    def update_config(self, new_config: MCPServerConfig) -> None:
         """更新配置信息"""
         self.config = new_config
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
+        return yaml.dump(
+            self.model_dump(mode="json"), default_flow_style=False, allow_unicode=True
+        )
 
     @classmethod
-    def from_yaml(cls, yaml_str: str) -> 'MCPServerData':
+    def from_yaml(cls, yaml_str: str) -> "MCPServerData":
         """从 YAML 字符串反序列化"""
         data = yaml.safe_load(yaml_str)
         return cls(**data)
@@ -283,10 +297,12 @@ class ServerRegistry(BaseModel):
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""
-        return yaml.dump(self.model_dump(mode='json'), default_flow_style=False, allow_unicode=True)
+        return yaml.dump(
+            self.model_dump(mode="json"), default_flow_style=False, allow_unicode=True
+        )
 
     @classmethod
-    def from_yaml(cls, yaml_str: str) -> 'ServerRegistry':
+    def from_yaml(cls, yaml_str: str) -> "ServerRegistry":
         """从 YAML 字符串反序列化"""
         data = yaml.safe_load(yaml_str)
         return cls(**data)
