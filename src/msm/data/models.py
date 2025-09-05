@@ -59,7 +59,7 @@ class MCPServerConfig(BaseModel):
         return cls(**data)
 
 
-class ServerStatus(str, Enum):
+class ContainerStatus(str, Enum):
     """MCP Server运行状态枚举"""
 
     RUNNING = "running"
@@ -147,7 +147,7 @@ class ResourceUsage(BaseModel):
 class MCPServerStatus(BaseModel):
     """MCP Server状态模型"""
 
-    status: ServerStatus = Field(..., description="运行状态")
+    status: ContainerStatus = Field(..., description="运行状态")
     container_logs: Optional[ContainerLogs] = Field(
         default=None, description="容器日志"
     )
@@ -162,11 +162,11 @@ class MCPServerStatus(BaseModel):
 
     def is_running(self) -> bool:
         """判断是否正在运行"""
-        return self.status == ServerStatus.RUNNING
+        return self.status == ContainerStatus.RUNNING
 
     def is_healthy(self) -> bool:
         """判断是否健康"""
-        return self.status == ServerStatus.RUNNING and self.health_status in [
+        return self.status == ContainerStatus.RUNNING and self.health_status in [
             None,
             "healthy",
         ]
@@ -247,7 +247,7 @@ class ServerRegistry(BaseModel):
         if config.name in self.servers:
             return False
 
-        status = MCPServerStatus(status=ServerStatus.UNKNOWN)
+        status = MCPServerStatus(status=ContainerStatus.UNKNOWN)
         self.servers[config.name] = MCPServerData(config=config, status=status)
         self.last_updated = datetime.now()
         return True
@@ -296,7 +296,7 @@ class ServerRegistry(BaseModel):
         return [
             server
             for server in self.servers.values()
-            if server.status.status == ServerStatus.RUNNING
+            if server.status.status == ContainerStatus.RUNNING
         ]
 
     def get_server_count(self) -> int:

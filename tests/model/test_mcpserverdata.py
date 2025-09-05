@@ -3,7 +3,7 @@
 """
 
 import pytest
-from msm.data.models import MCPServerData, MCPServerConfig, MCPServerStatus, ServerStatus, ContainerInfo
+from msm.data.models import MCPServerData, MCPServerConfig, MCPServerStatus, ContainerStatus, ContainerInfo
 
 
 class TestMCPServerDataYAML:
@@ -12,7 +12,7 @@ class TestMCPServerDataYAML:
     def test_mcpserverdata_yaml(self):
         """测试 MCPServerData 的 YAML 方法"""
         config = MCPServerConfig(name="demo-server", docker_command="docker run demo")
-        status = MCPServerStatus(status=ServerStatus.STOPPED)
+        status = MCPServerStatus(status=ContainerStatus.STOPPED)
         container_info = ContainerInfo(container_id="test123")
 
         data = MCPServerData(config=config, status=status, container_info=container_info)
@@ -30,7 +30,7 @@ class TestMCPServerDataYAML:
     def test_mcpserverdata_yaml_minimal(self):
         """测试 MCPServerData YAML 最小配置"""
         config = MCPServerConfig(name="minimal-server", docker_command="docker run minimal")
-        status = MCPServerStatus(status=ServerStatus.UNKNOWN)
+        status = MCPServerStatus(status=ContainerStatus.UNKNOWN)
 
         data = MCPServerData(config=config, status=status)
 
@@ -57,7 +57,7 @@ class TestMCPServerDataProperties:
     def test_name_property(self):
         """测试 name 属性"""
         config = MCPServerConfig(name="test-server", docker_command="docker run test")
-        status = MCPServerStatus(status=ServerStatus.RUNNING)
+        status = MCPServerStatus(status=ContainerStatus.RUNNING)
 
         data = MCPServerData(config=config, status=status)
         assert data.name == "test-server"
@@ -65,20 +65,20 @@ class TestMCPServerDataProperties:
     def test_update_status(self):
         """测试 update_status 方法"""
         config = MCPServerConfig(name="test-server", docker_command="docker run test")
-        old_status = MCPServerStatus(status=ServerStatus.STOPPED)
-        new_status = MCPServerStatus(status=ServerStatus.RUNNING)
+        old_status = MCPServerStatus(status=ContainerStatus.STOPPED)
+        new_status = MCPServerStatus(status=ContainerStatus.RUNNING)
 
         data = MCPServerData(config=config, status=old_status)
-        assert data.status.status == ServerStatus.STOPPED
+        assert data.status.status == ContainerStatus.STOPPED
 
         data.update_status(new_status)
-        assert data.status.status == ServerStatus.RUNNING
+        assert data.status.status == ContainerStatus.RUNNING
 
     def test_update_config(self):
         """测试 update_config 方法"""
         old_config = MCPServerConfig(name="old-server", docker_command="docker run old")
         new_config = MCPServerConfig(name="new-server", docker_command="docker run new")
-        status = MCPServerStatus(status=ServerStatus.RUNNING)
+        status = MCPServerStatus(status=ContainerStatus.RUNNING)
 
         data = MCPServerData(config=old_config, status=status)
         assert data.name == "old-server"
@@ -89,7 +89,7 @@ class TestMCPServerDataProperties:
     def test_update_container_info(self):
         """测试 update_container_info 方法"""
         config = MCPServerConfig(name="test-server", docker_command="docker run test")
-        status = MCPServerStatus(status=ServerStatus.RUNNING)
+        status = MCPServerStatus(status=ContainerStatus.RUNNING)
         
         data = MCPServerData(config=config, status=status)
         assert data.container_info is None
@@ -102,7 +102,7 @@ class TestMCPServerDataProperties:
     def test_get_container_id(self):
         """测试 get_container_id 方法"""
         config = MCPServerConfig(name="test-server", docker_command="docker run test")
-        status = MCPServerStatus(status=ServerStatus.RUNNING)
+        status = MCPServerStatus(status=ContainerStatus.RUNNING)
         
         # 测试没有容器信息的情况
         data = MCPServerData(config=config, status=status)

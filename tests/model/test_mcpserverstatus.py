@@ -3,7 +3,7 @@
 """
 
 import pytest
-from msm.data.models import MCPServerStatus, ServerStatus, ContainerLogs, ResourceUsage
+from msm.data.models import MCPServerStatus, ContainerStatus, ContainerLogs, ResourceUsage
 
 
 class TestMCPServerStatusYAML:
@@ -12,7 +12,7 @@ class TestMCPServerStatusYAML:
     def test_mcpserverstatus_yaml(self):
         """测试 MCPServerStatus 的 YAML 方法"""
         status = MCPServerStatus(
-            status=ServerStatus.RUNNING,
+            status=ContainerStatus.RUNNING,
             container_logs=ContainerLogs(logs=["log1", "log2"]),
             resource_usage=ResourceUsage(cpu_usage=10.0),
             uptime="1h 30m",
@@ -29,7 +29,7 @@ class TestMCPServerStatusYAML:
 
     def test_mcpserverstatus_yaml_minimal(self):
         """测试 MCPServerStatus YAML 最小配置"""
-        status = MCPServerStatus(status=ServerStatus.STOPPED)
+        status = MCPServerStatus(status=ContainerStatus.STOPPED)
 
         yaml_str = status.to_yaml()
         assert isinstance(yaml_str, str)
@@ -56,8 +56,8 @@ class TestMCPServerStatusMethods:
 
     def test_is_running(self):
         """测试 is_running 方法"""
-        running_status = MCPServerStatus(status=ServerStatus.RUNNING)
-        stopped_status = MCPServerStatus(status=ServerStatus.STOPPED)
+        running_status = MCPServerStatus(status=ContainerStatus.RUNNING)
+        stopped_status = MCPServerStatus(status=ContainerStatus.STOPPED)
 
         assert running_status.is_running() is True
         assert stopped_status.is_running() is False
@@ -65,12 +65,12 @@ class TestMCPServerStatusMethods:
     def test_is_healthy(self):
         """测试 is_healthy 方法"""
         healthy_status = MCPServerStatus(
-            status=ServerStatus.RUNNING, health_status="healthy"
+            status=ContainerStatus.RUNNING, health_status="healthy"
         )
         unhealthy_status = MCPServerStatus(
-            status=ServerStatus.RUNNING, health_status="unhealthy"
+            status=ContainerStatus.RUNNING, health_status="unhealthy"
         )
-        stopped_status = MCPServerStatus(status=ServerStatus.STOPPED)
+        stopped_status = MCPServerStatus(status=ContainerStatus.STOPPED)
 
         assert healthy_status.is_healthy() is True
         assert unhealthy_status.is_healthy() is False
@@ -78,7 +78,7 @@ class TestMCPServerStatusMethods:
 
     def test_update_check_time(self):
         """测试 update_check_time 方法"""
-        status = MCPServerStatus(status=ServerStatus.RUNNING)
+        status = MCPServerStatus(status=ContainerStatus.RUNNING)
         old_time = status.last_check
 
         # 等待一小段时间

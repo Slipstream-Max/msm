@@ -80,7 +80,7 @@ from pydantic import BaseModel, Field
 from typing import Dict, List, Optional
 from enum import Enum
 
-class ServerStatus(str, Enum):
+class ContainerStatus(str, Enum):
     """MCP Server运行状态枚举"""
 
     RUNNING = "running"
@@ -196,7 +196,7 @@ msm
 ### ✅ 已完成
 - [x] 数据层模型设计 (Data Layer)
   - [x] MCPServerConfig - MCP Server配置模型
-  - [x] ServerStatus - 运行状态枚举
+  - [x] ContainerStatus - 运行状态枚举
   - [x] ContainerInfo - 容器信息模型
   - [x] ContainerLogs - 容器日志模型
   - [x] ResourceUsage - 资源使用情况模型
@@ -223,7 +223,7 @@ msm
       # 容器信息获取
       def get_container_info(self, container_id: str) -> Optional[ContainerInfo]
       def get_container_logs(self, container_id: str) -> ContainerLogs
-      def get_container_status(self, container_id: str) -> ServerStatus
+      def get_container_status(self, container_id: str) -> ContainerStatus
   ```
 
 - [ ] **步骤2: 状态监控器** (`src/msm/core/status_monitor.py`)
@@ -264,18 +264,6 @@ msm
       def list_all_servers(self) -> List[MCPServerData]
   ```
 
-- [ ] **步骤5: 日志管理器** (`src/msm/core/log_manager.py`)
-  ```python
-  class LogManager:
-      # 日志获取
-      def get_container_logs(self, container_id: str, lines: int = 100) -> List[str]
-      def stream_container_logs(self, container_id: str) -> Iterator[str]
-      def save_logs_to_file(self, container_id: str, file_path: str) -> bool
-      
-      # 日志过滤和搜索
-      def filter_logs(self, logs: List[str], keyword: str) -> List[str]
-      def get_error_logs(self, container_id: str) -> List[str]
-  ```
 
 ##### 第三阶段（高级功能）
 - [ ] **步骤6: 远程连接管理器** (`src/msm/core/remote_manager.py`)

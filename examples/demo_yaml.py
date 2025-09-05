@@ -14,7 +14,7 @@ from msm.data.models import (
     MCPServerData,
     ResourceUsage,
     ServerRegistry,
-    ServerStatus,
+    ContainerStatus,
 )
 
 
@@ -162,7 +162,7 @@ def demo_server_status():
     print("=== 服务器状态示例 ===")
 
     status = MCPServerStatus(
-        status=ServerStatus.RUNNING,
+        status=ContainerStatus.RUNNING,
         container_logs=ContainerLogs(logs=["INFO: Server started", "INFO: Listening on port 80"]),
         resource_usage=ResourceUsage(cpu_usage=12.5, memory_usage=67108864),
         uptime="2h 15m 30s",
@@ -191,7 +191,7 @@ def demo_server_data():
     )
 
     status = MCPServerStatus(
-        status=ServerStatus.RUNNING,
+        status=ContainerStatus.RUNNING,
         uptime="3h 45m",
         health_status="healthy"
     )

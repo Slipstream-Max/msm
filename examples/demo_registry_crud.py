@@ -11,7 +11,7 @@ from msm.data.models import (
     MCPServerConfig,
     MCPServerStatus,
     ServerRegistry,
-    ServerStatus,
+    ContainerStatus,
     ContainerInfo,
     ResourceUsage,
 )
@@ -114,7 +114,7 @@ def demo_update_servers(registry):
     # 更新服务器状态
     print("\n更新服务器状态:")
     running_status = MCPServerStatus(
-        status=ServerStatus.RUNNING,
+        status=ContainerStatus.RUNNING,
         resource_usage=ResourceUsage(
             cpu_usage=15.5,
             memory_usage=52428800,  # 50MB

@@ -2,7 +2,7 @@
 测试 ServerStatus 枚举
 """
 
-from msm.data.models import ServerStatus
+from msm.data.models import ContainerStatus
 
 
 class TestServerStatus:
@@ -10,38 +10,38 @@ class TestServerStatus:
 
     def test_server_status_values(self):
         """测试枚举值"""
-        assert ServerStatus.RUNNING.value == "running"
-        assert ServerStatus.STOPPED.value == "stopped"
-        assert ServerStatus.ERROR.value == "error"
-        assert ServerStatus.UNKNOWN.value == "unknown"
-        assert ServerStatus.STARTING.value == "starting"
-        assert ServerStatus.STOPPING.value == "stopping"
+        assert ContainerStatus.RUNNING.value == "running"
+        assert ContainerStatus.STOPPED.value == "stopped"
+        assert ContainerStatus.ERROR.value == "error"
+        assert ContainerStatus.UNKNOWN.value == "unknown"
+        assert ContainerStatus.STARTING.value == "starting"
+        assert ContainerStatus.STOPPING.value == "stopping"
 
     def test_server_status_str_representation(self):
         """测试字符串表示"""
-        assert str(ServerStatus.RUNNING) == "running"
-        assert str(ServerStatus.STOPPED) == "stopped"
-        assert str(ServerStatus.ERROR) == "error"
-        assert str(ServerStatus.UNKNOWN) == "unknown"
-        assert str(ServerStatus.STARTING) == "starting"
-        assert str(ServerStatus.STOPPING) == "stopping"
+        assert str(ContainerStatus.RUNNING) == "running"
+        assert str(ContainerStatus.STOPPED) == "stopped"
+        assert str(ContainerStatus.ERROR) == "error"
+        assert str(ContainerStatus.UNKNOWN) == "unknown"
+        assert str(ContainerStatus.STARTING) == "starting"
+        assert str(ContainerStatus.STOPPING) == "stopping"
 
     def test_server_status_membership(self):
         """测试枚举成员"""
-        assert ServerStatus.RUNNING in ServerStatus
-        assert ServerStatus.STOPPED in ServerStatus
-        assert ServerStatus.ERROR in ServerStatus
-        assert ServerStatus.UNKNOWN in ServerStatus
-        assert ServerStatus.STARTING in ServerStatus
-        assert ServerStatus.STOPPING in ServerStatus
+        assert ContainerStatus.RUNNING in ContainerStatus
+        assert ContainerStatus.STOPPED in ContainerStatus
+        assert ContainerStatus.ERROR in ContainerStatus
+        assert ContainerStatus.UNKNOWN in ContainerStatus
+        assert ContainerStatus.STARTING in ContainerStatus
+        assert ContainerStatus.STOPPING in ContainerStatus
 
     def test_server_status_iteration(self):
         """测试枚举迭代"""
-        statuses = list(ServerStatus)
+        statuses = list(ContainerStatus)
         assert len(statuses) == 6
-        assert ServerStatus.RUNNING in statuses
-        assert ServerStatus.STOPPED in statuses
-        assert ServerStatus.ERROR in statuses
-        assert ServerStatus.UNKNOWN in statuses
-        assert ServerStatus.STARTING in statuses
-        assert ServerStatus.STOPPING in statuses
+        assert ContainerStatus.RUNNING in statuses
+        assert ContainerStatus.STOPPED in statuses
+        assert ContainerStatus.ERROR in statuses
+        assert ContainerStatus.UNKNOWN in statuses
+        assert ContainerStatus.STARTING in statuses
+        assert ContainerStatus.STOPPING in statuses

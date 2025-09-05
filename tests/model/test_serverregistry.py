@@ -3,7 +3,7 @@
 """
 
 import pytest
-from msm.data.models import ServerRegistry, MCPServerConfig, MCPServerStatus, ServerStatus
+from msm.data.models import ServerRegistry, MCPServerConfig, MCPServerStatus, ContainerStatus
 
 
 class TestServerRegistryYAML:
@@ -122,12 +122,12 @@ class TestServerRegistryMethods:
         config = MCPServerConfig(name="test-server", docker_command="docker run test")
         registry.add_server(config)
 
-        new_status = MCPServerStatus(status=ServerStatus.RUNNING)
+        new_status = MCPServerStatus(status=ContainerStatus.RUNNING)
 
         # 更新存在的服务器状态
         result = registry.update_server_status("test-server", new_status)
         assert result is True
-        assert registry.servers["test-server"].status.status == ServerStatus.RUNNING
+        assert registry.servers["test-server"].status.status == ContainerStatus.RUNNING
 
         # 更新不存在的服务器状态
         result = registry.update_server_status("non-existent", new_status)
@@ -171,8 +171,8 @@ class TestServerRegistryMethods:
         registry.add_server(config2)
 
         # 设置状态
-        running_status = MCPServerStatus(status=ServerStatus.RUNNING)
-        stopped_status = MCPServerStatus(status=ServerStatus.STOPPED)
+        running_status = MCPServerStatus(status=ContainerStatus.RUNNING)
+        stopped_status = MCPServerStatus(status=ContainerStatus.STOPPED)
 
         registry.update_server_status("running-server", running_status)
         registry.update_server_status("stopped-server", stopped_status)
