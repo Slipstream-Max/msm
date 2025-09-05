@@ -148,9 +148,6 @@ class MCPServerStatus(BaseModel):
     """MCP Server状态模型"""
 
     status: ServerStatus = Field(..., description="运行状态")
-    container_info: Optional[ContainerInfo] = Field(
-        default=None, description="容器信息"
-    )
     container_logs: Optional[ContainerLogs] = Field(
         default=None, description="容器日志"
     )
@@ -196,6 +193,9 @@ class MCPServerData(BaseModel):
 
     config: MCPServerConfig = Field(..., description="配置信息")
     status: MCPServerStatus = Field(..., description="状态信息")
+    container_info: Optional[ContainerInfo] = Field(
+        default=None, description="容器信息"
+    )
 
     @property
     def name(self) -> str:
@@ -209,6 +209,14 @@ class MCPServerData(BaseModel):
     def update_config(self, new_config: MCPServerConfig) -> None:
         """更新配置信息"""
         self.config = new_config
+
+    def update_container_info(self, container_info: Optional[ContainerInfo]) -> None:
+        """更新容器信息"""
+        self.container_info = container_info
+
+    def get_container_id(self) -> Optional[str]:
+        """获取容器ID"""
+        return self.container_info.container_id if self.container_info else None
 
     def to_yaml(self) -> str:
         """序列化为 YAML 字符串"""

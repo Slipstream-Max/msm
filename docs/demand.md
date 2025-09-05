@@ -15,10 +15,10 @@
 │          Core Management Layer                           
 │  ┌─────────────────────────────────────────────────────────────┐ │
 │  │           MCP管理器                                                           
-│  │   - MCP Server生命周期管理（启动/停止/重启）                                                                    
-│  │   - 监控各个MCP Server实例的运行状态                                                                              
-│  │   - 根据命令或请求获取和处理日志                                                                                    
-│  │   - 管理MCP Server对应的容器拉取命令                                                                              
+│  │   - MCP Server生命周期管理（启动/停止/重启）
+│  │   - 监控各个MCP Server实例的运行状态
+│  │   - 根据命令或请求获取和处理日志            
+│  │   - 管理MCP Server对应的容器拉取命令
 │  └─────────────────────────────────────────────────────────────┘ │
 ├────────────────────────────────────────────────────────────────┤
 │       Data Layer                                                          
@@ -146,9 +146,6 @@ class MCPServerStatus(BaseModel):
     """MCP Server状态模型"""
 
     status: ServerStatus = Field(..., description="运行状态")
-    container_info: Optional[ContainerInfo] = Field(
-        default=None, description="容器信息"
-    )
     container_logs: Optional[ContainerLogs] = Field(
         default=None, description="容器日志"
     )
@@ -165,6 +162,9 @@ class MCPServerData(BaseModel):
     """MCP Server完整数据模型"""
 
     config: MCPServerConfig = Field(..., description="配置信息")
+    container_info: Optional[ContainerInfo] = Field(
+        default=None, description="容器信息"
+    )
     status: MCPServerStatus = Field(..., description="状态信息")
 
 class ServerRegistry(BaseModel):
@@ -239,25 +239,12 @@ msm
       def get_running_containers(self) -> List[str]
   ```
 
-- [ ] **步骤3: 配置管理器** (`src/msm/core/config_manager.py`)
-  ```python
-  class ConfigManager:
-      # 配置文件操作
-      def load_registry_from_file(self, file_path: str) -> ServerRegistry
-      def save_registry_to_file(self, registry: ServerRegistry, file_path: str) -> bool
-      def backup_registry(self, registry: ServerRegistry) -> str
-      
-      # 配置验证
-      def validate_config(self, config: MCPServerConfig) -> bool
-      def validate_docker_command(self, command: str) -> bool
-  ```
-
 ##### 第二阶段（核心整合）
 - [ ] **步骤4: MCP服务器管理器** (`src/msm/core/mcp_manager.py`)
   ```python
   class MCPServerManager:
       def __init__(self):
-          self.container_manager = DockerContainerManager()
+          self.container_manager = ContainerManager()
           self.status_monitor = StatusMonitor()
           self.remote_manager = RemoteManager()
           self.registry = ServerRegistry()

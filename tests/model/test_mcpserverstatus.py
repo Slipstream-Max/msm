@@ -3,7 +3,7 @@
 """
 
 import pytest
-from msm.data.models import MCPServerStatus, ServerStatus, ContainerInfo, ContainerLogs, ResourceUsage
+from msm.data.models import MCPServerStatus, ServerStatus, ContainerLogs, ResourceUsage
 
 
 class TestMCPServerStatusYAML:
@@ -13,7 +13,6 @@ class TestMCPServerStatusYAML:
         """测试 MCPServerStatus 的 YAML 方法"""
         status = MCPServerStatus(
             status=ServerStatus.RUNNING,
-            container_info=ContainerInfo(container_id="test123"),
             container_logs=ContainerLogs(logs=["log1", "log2"]),
             resource_usage=ResourceUsage(cpu_usage=10.0),
             uptime="1h 30m",
@@ -38,7 +37,6 @@ class TestMCPServerStatusYAML:
 
         restored = MCPServerStatus.from_yaml(yaml_str)
         assert restored.status == status.status
-        assert restored.container_info is None
         assert restored.container_logs is None
         assert restored.resource_usage is None
         assert restored.uptime is None

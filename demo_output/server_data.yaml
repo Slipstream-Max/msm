@@ -1,0 +1,29 @@
+config:
+  auto_start: false
+  created_at: '2025-09-05T11:56:09.564430'
+  description: 演示用的服务器
+  docker_command: docker run -d -p 8080:80 --name demo-server nginx:latest
+  environment: {}
+  health_check: null
+  host: localhost
+  labels: {}
+  name: demo-server
+  networks: []
+  port: null
+  restart_policy: 'no'
+  updated_at: '2025-09-05T11:56:09.564432'
+  volumes: []
+container_info:
+  container_id: test123
+  container_name: demo-server
+  image: nginx:latest
+  image_id: null
+  mounts: []
+  ports: {}
+status:
+  container_logs: null
+  health_status: healthy
+  last_check: '2025-09-05T11:56:09.564436'
+  resource_usage: null
+  status: running
+  uptime: 3h 45m

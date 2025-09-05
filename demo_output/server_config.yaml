@@ -1,5 +1,5 @@
 auto_start: true
-created_at: '2025-09-04T10:47:55.939133'
+created_at: '2025-09-05T11:56:09.562065'
 description: 演示用的 Nginx 服务器
 docker_command: docker run -d -p 8080:80 --name demo-nginx nginx:latest
 environment:
@@ -25,7 +25,7 @@ networks:
 - app-network
 port: 8080
 restart_policy: always
-updated_at: '2025-09-04T10:47:55.939143'
+updated_at: '2025-09-05T11:56:09.562081'
 volumes:
 - /host/logs:/var/log/nginx
 - /host/config:/etc/nginx/conf.d

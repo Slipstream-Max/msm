@@ -11,6 +11,7 @@ from msm.data.models import (
     ContainerLogs,
     MCPServerConfig,
     MCPServerStatus,
+    MCPServerData,
     ResourceUsage,
     ServerRegistry,
     ServerStatus,
@@ -162,10 +163,6 @@ def demo_server_status():
 
     status = MCPServerStatus(
         status=ServerStatus.RUNNING,
-        container_info=ContainerInfo(
-            container_id="abc123def456",
-            container_name="demo-nginx-server"
-        ),
         container_logs=ContainerLogs(logs=["INFO: Server started", "INFO: Listening on port 80"]),
         resource_usage=ResourceUsage(cpu_usage=12.5, memory_usage=67108864),
         uptime="2h 15m 30s",
@@ -181,6 +178,41 @@ def demo_server_status():
     status_file = output_dir / "server_status.yaml"
     status_file.write_text(yaml_content, encoding='utf-8')
     print(f"服务器状态已保存到: {status_file.absolute()}\n")
+
+
+def demo_server_data():
+    """演示服务器数据的 YAML 序列化"""
+    print("=== 服务器数据示例 ===")
+
+    config = MCPServerConfig(
+        name="demo-server",
+        docker_command="docker run -d -p 8080:80 --name demo-server nginx:latest",
+        description="演示用的服务器"
+    )
+
+    status = MCPServerStatus(
+        status=ServerStatus.RUNNING,
+        uptime="3h 45m",
+        health_status="healthy"
+    )
+
+    container_info = ContainerInfo(
+        container_id="test123",
+        container_name="demo-server",
+        image="nginx:latest"
+    )
+
+    data = MCPServerData(config=config, status=status, container_info=container_info)
+
+    yaml_content = data.to_yaml()
+    print(yaml_content)
+
+    # 保存到文件
+    output_dir = Path("demo_output")
+    output_dir.mkdir(exist_ok=True)
+    data_file = output_dir / "server_data.yaml"
+    data_file.write_text(yaml_content, encoding='utf-8')
+    print(f"服务器数据已保存到: {data_file.absolute()}\n")
 
 
 def demo_server_registry():
@@ -274,6 +306,7 @@ def main():
         demo_container_logs()
         demo_resource_usage()
         demo_server_status()
+        demo_server_data()
         demo_server_registry()
         demo_round_trip()
 

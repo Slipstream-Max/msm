@@ -115,11 +115,6 @@ def demo_update_servers(registry):
     print("\n更新服务器状态:")
     running_status = MCPServerStatus(
         status=ServerStatus.RUNNING,
-        container_info=ContainerInfo(
-            container_id="abc123def456",
-            container_name="nginx-prod",
-            image="nginx:stable",
-        ),
         resource_usage=ResourceUsage(
             cpu_usage=15.5,
             memory_usage=52428800,  # 50MB
@@ -131,12 +126,23 @@ def demo_update_servers(registry):
     success = registry.update_server_status("nginx-server", running_status)
     print(f"更新状态成功: {success}")
 
+    # 更新容器信息
+    print("\n更新容器信息:")
+    nginx_server = registry.get_server("nginx-server")
+    if nginx_server:
+        container_info = ContainerInfo(
+            container_id="abc123def456",
+            container_name="nginx-prod",
+            image="nginx:stable",
+        )
+        nginx_server.update_container_info(container_info)
+
     # 验证更新结果
     updated_server = registry.get_server("nginx-server")
     if updated_server:
         print(f"更新后的描述: {updated_server.config.description}")
         print(f"更新后的状态: {updated_server.status.status}")
-        print(f"容器ID: {updated_server.status.container_info.container_id}")
+        print(f"容器ID: {updated_server.get_container_id()}")
 
 
 def demo_delete_servers(registry):

@@ -1,16 +1,9 @@
-container_info:
-  container_id: abc123def456
-  container_name: demo-nginx-server
-  image: null
-  image_id: null
-  mounts: []
-  ports: {}
 container_logs:
   logs:
   - 'INFO: Server started'
   - 'INFO: Listening on port 80'
 health_status: healthy
-last_check: '2025-09-04T10:47:55.940887'
+last_check: '2025-09-05T11:56:09.564041'
 resource_usage:
   block_read: null
   block_write: null
