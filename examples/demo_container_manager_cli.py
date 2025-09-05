@@ -24,8 +24,8 @@ from pathlib import Path
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from msm.core.container_manager import ContainerManager
-from msm.data.models import MCPServerConfig
+from msm.core.container_manager import ContainerManager  # noqa: E402
+from msm.data.models import MCPServerConfig  # noqa: E402
 
 
 # 配置日志记录，以便看到 ContainerManager 的输出
