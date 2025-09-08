@@ -257,16 +257,7 @@ class ContainerManager:
         try:
             container: Container = self.client.containers.get(container_id)
             container.reload()
-            status_str = container.status
-            # Docker status: 'created', 'restarting', 'running', 'removing', 'paused', 'exited', 'dead'
-            if status_str == "running":
-                return ContainerStatus.RUNNING
-            elif status_str in ["exited", "dead"]:
-                return ContainerStatus.STOPPED
-            elif status_str in ["created", "restarting"]:
-                return ContainerStatus.STARTING
-            else:
-                return ContainerStatus.UNKNOWN
+            return ContainerStatus.from_docker_status(container.status)
         except NotFound:
             return ContainerStatus.UNKNOWN
         except DockerException as e:

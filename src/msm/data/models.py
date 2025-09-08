@@ -72,6 +72,25 @@ class ContainerStatus(str, Enum):
     def __str__(self) -> str:
         return self.value
 
+    @classmethod
+    def from_docker_status(cls, docker_status: str) -> "ContainerStatus":
+        """
+        将 Docker 的原生状态字符串映射到 ContainerStatus 枚举。
+
+        :param docker_status: Docker 容器的原生状态字符串 (如 'running', 'exited')。
+        :return: 对应的 ContainerStatus 枚举成员。
+        """
+        status_map = {
+            "running": cls.RUNNING,
+            "exited": cls.STOPPED,
+            "dead": cls.STOPPED,
+            "created": cls.STARTING,
+            "restarting": cls.STARTING,
+            "paused": cls.UNKNOWN,
+            "removing": cls.STOPPING,
+        }
+        return status_map.get(docker_status, cls.UNKNOWN)
+
 
 class ContainerInfo(BaseModel):
     """容器信息模型"""
